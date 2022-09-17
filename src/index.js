@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import './style.css';
 import printMe from './print.js';
+import pageLoad from './pageLoad.js'
 
 function component() {
     const element = document.createElement('div');
@@ -17,4 +18,4 @@ function component() {
     return element;
   }
   
-  document.body.appendChild(component());
+  // document.body.appendChild(component());

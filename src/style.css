@@ -1,3 +1,40 @@
-.hello {
-    color: red;
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#mainContainer {
+    height: 100vmax;
+    background-color: black;
+}
+
+header {
+    background-color: aqua;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding: 20px;
+}
+
+#mainContent {
+    display: flex;
+    height: 100%;
+}
+
+#sidebar {
+    width: 200px;
+    height: 100%;
+    background-color: lightpink;
+}
+
+#content {
+    display: flex;
+    flex-grow: 1;
+    background-image: linear-gradient(180deg, lightyellow, lightgrey);
+}
+
+footer {
+    display: inline-block;
+    background-color: yellow;
+    height: 50px;
+    width: 100%;
 }
