@@ -24,10 +24,22 @@ header {
     width: 200px;
     height: 100%;
     background-color: lightpink;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+button {
+    padding: 5px 10px;
+    /* border-radius: 10px; */
 }
 
 #content {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: min-content;
+    grid-auto-rows: min-content;
     flex-grow: 1;
     background-image: linear-gradient(180deg, lightyellow, lightgrey);
 }
@@ -37,4 +49,28 @@ footer {
     background-color: yellow;
     height: 50px;
     width: 100%;
+}
+
+.card {
+    background-color: white;
+    /* border: 1px solid red; */
+    border-radius: 5px;
+    height: 80px;
+    margin: 20px;
+    padding: 20px;
+}
+
+input[type=text] {
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 1px black;
+}
+
+input[type=text]:focus-visible {
+    outline: none;
+}
+
+#addTitleButton {
+    background-color: rgba(211, 211, 211, 0.3);
+    border: none;
 }

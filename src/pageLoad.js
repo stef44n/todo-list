@@ -1,4 +1,4 @@
-export const pageLoad = (() => {
+const pageLoad = (() => {
     const mainContainer = document.createElement('div')
     mainContainer.setAttribute('id', 'mainContainer')
     document.body.append(mainContainer)
@@ -15,6 +15,11 @@ export const pageLoad = (() => {
     sidebar.setAttribute('id', 'sidebar')
     mainContent.append(sidebar)
 
+    const newProjectButton = document.createElement('button')
+    newProjectButton.textContent = 'New Project +'
+    newProjectButton.setAttribute('id', 'newProject')
+    sidebar.append(newProjectButton)
+
     const content = document.createElement('div')
     content.setAttribute('id', 'content')
     mainContent.append(content)
@@ -22,4 +27,14 @@ export const pageLoad = (() => {
     const footer = document.createElement('footer')
     footer.setAttribute('id', 'footer')
     mainContainer.append(footer)
+
+    return {
+        header,
+        sidebar,
+        newProjectButton,
+        content,
+        footer,
+    }
 })();
+
+export default pageLoad;

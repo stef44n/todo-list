@@ -2,6 +2,8 @@ import _ from 'lodash';
 import './style.css';
 import printMe from './print.js';
 import pageLoad from './pageLoad.js'
+import addNewProject from './projectFunction'
+import {addNewProjectCard} from './projectFunction'
 
 function component() {
     const element = document.createElement('div');
@@ -17,5 +19,7 @@ function component() {
 
     return element;
   }
-  
+
+addNewProjectCard()
+addNewProject()
   // document.body.appendChild(component());
