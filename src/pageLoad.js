@@ -26,6 +26,7 @@ const pageLoad = (() => {
 
     const footer = document.createElement('footer')
     footer.setAttribute('id', 'footer')
+    footer.textContent = 'Stef44n'
     mainContainer.append(footer)
 
     return {
