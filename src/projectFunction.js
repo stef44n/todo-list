@@ -98,10 +98,28 @@ const addNewProject = (() => {
         priorityLabel.innerText = 'Priority'
         formContainer.append(priorityLabel)
     
-        const priorityInput = document.createElement('input')
-        priorityInput.setAttribute('type', 'text')
+        const priorityInput = document.createElement('select')
         priorityInput.setAttribute('name', 'priority')
-        priorityInput.setAttribute('placeholder', 'Q1/2/3/4')
+
+        const priOptX = document.createElement('option')
+        priorityInput.append(priOptX)
+
+        const priOpt1 = document.createElement('option')
+        priOpt1.textContent = 'Q1'
+        priorityInput.append(priOpt1)
+
+        const priOpt2 = document.createElement('option')
+        priOpt2.textContent = 'Q2'
+        priorityInput.append(priOpt2)
+
+        const priOpt3 = document.createElement('option')
+        priOpt3.textContent = 'Q3'
+        priorityInput.append(priOpt3)
+
+        const priOpt4 = document.createElement('option')
+        priOpt4.textContent = 'Q4'
+        priorityInput.append(priOpt4)
+
         formContainer.append(priorityInput)
     
         const submitButton = document.createElement('input')
@@ -157,6 +175,7 @@ const addNewProject = (() => {
                 delBtn.classList.toggle('displayBlock')
             })
 
+            //--------------------------------------------- ADD TODOS INTO ARRAY
             const todoObj = projectFactory(
                 toDoTitleInput.value,
                 deadlineInput.value,
