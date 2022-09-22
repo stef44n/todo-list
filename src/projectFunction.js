@@ -39,13 +39,14 @@ const addNewProject = (() => {
     newToDoButton.textContent = 'add new ToDo'
     toDoSpace.append(newToDoButton)
 
-    let newToDo = ''
-    let addToDoContent = ''
+    // let newToDo = ''
+    // let addToDoContent = ''
+    let projectArray = []
 
     index++
     let thisIndex = index
     newToDoButton.addEventListener('click', () => {
-        // ------------------------------------------------------
+        // ------------------------------------------------------ POPUP FORM
     
         const formPopUp = document.createElement('div')
         formPopUp.setAttribute('class', 'form-popup')
@@ -106,6 +107,9 @@ const addNewProject = (() => {
         const submitButton = document.createElement('input')
         submitButton.setAttribute('type', 'submit')
         formContainer.append(submitButton)
+        let newToDo = ''
+
+        //----------------------------------------------- SUBMIT FORM
 
         function onSubmit(el) {
             el.preventDefault()
@@ -136,11 +140,31 @@ const addNewProject = (() => {
             newToDo.append(NTDPriority)
             NTDPriority.style.display = "none";
 
+            let delBtn = document.createElement('button')
+            delBtn.textContent = 'DEL'
+            newToDo.append(delBtn)
+            delBtn.style.display = "none";
+
+            delBtn.addEventListener('click', () => {
+                newToDo.remove()
+            })
+
+            //------------------------------------------------ DISPLAY TODO DETAILS
             newToDo.addEventListener('click', () => {
                 NTDDesc.classList.toggle('displayBlock')
                 NTDDue.classList.toggle('displayBlock')
                 NTDPriority.classList.toggle('displayBlock')
+                delBtn.classList.toggle('displayBlock')
             })
+
+            const todoObj = projectFactory(
+                toDoTitleInput.value,
+                deadlineInput.value,
+                toDoDescInput.value,
+                priorityInput.value
+            )
+            projectArray.push(todoObj)
+            console.table(projectArray)
         }
 
         formContainer.addEventListener('submit', onSubmit)
@@ -173,11 +197,12 @@ const addNewProject = (() => {
 
     return {
         card,
-        newToDo,
+        // newToDo,
         toDoSpace,
     }
 });
 
+//-------------------------------------------------------- ADD NEW PROJECT
 function addNewProjectCard() {
     const button = document.getElementById('newProject')
     button.addEventListener('click', () => {
