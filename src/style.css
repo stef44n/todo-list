@@ -117,7 +117,7 @@ input[type=text]:focus-visible {
     padding: 5px;
 }
 
-h2, input[type=submit] {
+#formHeading, input[type=submit] {
     grid-column: span 2;
 }
 

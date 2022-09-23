@@ -42,6 +42,7 @@ const addNewProject = (() => {
     // let newToDo = ''
     // let addToDoContent = ''
     let projectArray = []
+    let num = 0
 
     index++
     let thisIndex = index
@@ -58,8 +59,9 @@ const addNewProject = (() => {
         formContainer.classList.add(`form${thisIndex}`)
         formPopUp.append(formContainer)
         
-        const formHeading = document.createElement('h2')
-        formHeading.textContent = 'New ToDo'
+        const formHeading = document.createElement('h3')
+        formHeading.textContent = `New ${titleInput.value} item #${num}`
+        formHeading.setAttribute('id', 'formHeading')
         formContainer.append(formHeading)
     
         const titleLabel = document.createElement('label')
@@ -72,7 +74,7 @@ const addNewProject = (() => {
         toDoTitleInput.setAttribute('name', 'title')
         toDoTitleInput.setAttribute('required', '')
         formContainer.append(toDoTitleInput)
-    
+
         const descLabel = document.createElement('label')
         descLabel.setAttribute('for', 'desc')
         descLabel.innerText = 'Description'
@@ -138,6 +140,7 @@ const addNewProject = (() => {
             newToDo = document.createElement('div')
             newToDo.setAttribute('class', 'ToDo')
             toDoSpace.append(newToDo)
+            newToDo.setAttribute('value', `${num}`)
 
             let NTDTitle = document.createElement('p')
             NTDTitle.textContent = toDoTitleInput.value
@@ -162,9 +165,48 @@ const addNewProject = (() => {
             delBtn.textContent = 'DEL'
             newToDo.append(delBtn)
             delBtn.style.display = "none";
+            delBtn.setAttribute('value', `${num}`)
 
             delBtn.addEventListener('click', () => {
                 newToDo.remove()
+                // projectArray.splice(todoObj.value, 1)
+
+                // projectArray = projectArray.filter(function(todo) {
+                //     if (todo.value != projectArray[todoObj.value]['value']) {
+                //         console.table(todo) // loops over objects (index) that satisfy TRUE (!=)
+                //         console.table(projectArray[todo.value]) // same as pure 'todo'
+
+                //         console.log(todo.value) // loops over the objects' 'value' that satisfy TRUE (eg. 1)
+                //         console.log(projectArray[todo.value]['value']) // same as pure 'todo.value'
+
+                //         console.log(projectArray[todoObj.value]['value']) // value of the clicked object (eg. 1)
+                //         console.log(todoObj.value) // value of the clicked object (eg. 1)
+
+                //         console.table(projectArray[todoObj.value]) // what i click on (object)
+                //         console.table(todoObj) // what i click on (object)
+                //         return true
+                //     }
+                // })
+                
+                projectArray = projectArray.filter(function(todo) {
+                    if (todo.value != todoObj.value) {
+                        // console.table(todo) // loops over objects (index) that satisfy TRUE (!=) LOOPS OTHER
+                        // console.table(projectArray[todo.value]) // same as pure 'todo' LOOPS OTHER
+
+                        console.log(todo.value) // loops over the objects' 'value' that satisfy TRUE (eg. 1) LOOPS OTHER
+                        // console.log(projectArray[todo.value]['value']) // same as pure 'todo.value' LOOPS OTHER
+
+                        // console.log(projectArray[todoObj.value]['value']) // value of the clicked object (eg. 1)
+                        // console.log(todoObj.value) // value of the clicked object (eg. 1) CLICKED ONLY
+
+                        // console.table(projectArray[todoObj.value]) // what i click on (object)
+                        // console.table(todoObj) // what i click on (object) CLICKED ONLY
+                        return true
+                    }
+                })
+
+                // console.log(thisOne)
+                console.table(projectArray)
             })
 
             //------------------------------------------------ DISPLAY TODO DETAILS
@@ -182,8 +224,11 @@ const addNewProject = (() => {
                 toDoDescInput.value,
                 priorityInput.value
             )
+            todoObj.value = num
             projectArray.push(todoObj)
+            // console.log(projectArray[todoObj.value]['value'])
             console.table(projectArray)
+            num++
         }
 
         formContainer.addEventListener('submit', onSubmit)
@@ -192,6 +237,14 @@ const addNewProject = (() => {
         //--------------------------------------------------------------
         formPopUp.style.display = "block";
         newToDoButton.setAttribute('disabled', '')
+        toDoTitleInput.focus()
+
+        formHeading.addEventListener('click', () => {
+            // formPopUp.style.display = "none"
+            formPopUp.remove()
+            newToDoButton.disabled = false
+            // formPopUp.classList.toggle('displayBlock')
+        })
         
         // addToDoContent = document.createElement('button')
         // newToDo.setAttribute('id', 'addToDoContentButton')
