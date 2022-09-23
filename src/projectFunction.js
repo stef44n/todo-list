@@ -187,6 +187,9 @@ const addNewProject = (() => {
                 //         return true
                 //     }
                 // })
+                // arr = arr.filter(function(item) {
+                //     return item !== value
+                // })
                 
                 projectArray = projectArray.filter(function(todo) {
                     if (todo.value != todoObj.value) {
@@ -263,8 +266,37 @@ const addNewProject = (() => {
     card.append(deleteProjectButton)
 
     deleteProjectButton.addEventListener('click', () => {
-        card.remove()
+        deleteProjectButton.setAttribute('disabled', '')
+        deleteProjectValidation()
+        // card.remove()
     })
+
+    function deleteProjectValidation() {
+        const delValidation = document.createElement('div')
+        delValidation.setAttribute('id', 'delValidation')
+        card.append(delValidation)
+    
+        const delQuestion = document.createElement('h4')
+        delQuestion.textContent = 'DELETE PROJECT?'
+        delValidation.append(delQuestion)
+    
+        const delYes = document.createElement('button')
+        delYes.textContent = 'Yes'
+        delValidation.append(delYes)
+
+        delYes.addEventListener('click', () => {
+            card.remove()
+        })
+    
+        const delNo = document.createElement('button')
+        delNo.textContent = 'No'
+        delValidation.append(delNo)
+        
+        delNo.addEventListener('click', () => {
+            delValidation.remove()
+            deleteProjectButton.disabled = false
+        })
+    }
 
 
     return {
