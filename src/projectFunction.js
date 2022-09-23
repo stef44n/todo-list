@@ -17,6 +17,7 @@ const addNewProject = (() => {
     titleInput.setAttribute('type', 'text')
     titleInput.setAttribute('placeholder', 'set project title')
     card.append(titleInput)
+    titleInput.focus()
 
     const addTitleButton = document.createElement('button')
     addTitleButton.setAttribute('id', 'addTitleButton')
@@ -24,12 +25,22 @@ const addNewProject = (() => {
     card.append(addTitleButton)
 
     addTitleButton.addEventListener('click', () => {
+        addTitle()
+    })
+
+    titleInput.addEventListener("keypress", function(event) {
+        if (event.key === 'Enter') {
+            addTitle()
+        }
+    })
+    
+    function addTitle() {
         let newTitle = document.createElement('h1')
         newTitle.innerText = titleInput.value
         card.prepend(newTitle)
         titleInput.remove()
         addTitleButton.remove()
-    })
+    }
 
     const toDoSpace = document.createElement('div')
     toDoSpace.setAttribute('class', 'toDoSpace')
