@@ -150,7 +150,7 @@ const addNewProject = (() => {
 
             newToDo = document.createElement('div')
             newToDo.setAttribute('class', 'ToDo')
-            toDoSpace.append(newToDo)
+            // toDoSpace.append(newToDo)
             newToDo.setAttribute('value', `${num}`)
 
             let NTDTitle = document.createElement('p')
@@ -180,27 +180,6 @@ const addNewProject = (() => {
 
             delBtn.addEventListener('click', () => {
                 newToDo.remove()
-                // projectArray.splice(todoObj.value, 1)
-
-                // projectArray = projectArray.filter(function(todo) {
-                //     if (todo.value != projectArray[todoObj.value]['value']) {
-                //         console.table(todo) // loops over objects (index) that satisfy TRUE (!=)
-                //         console.table(projectArray[todo.value]) // same as pure 'todo'
-
-                //         console.log(todo.value) // loops over the objects' 'value' that satisfy TRUE (eg. 1)
-                //         console.log(projectArray[todo.value]['value']) // same as pure 'todo.value'
-
-                //         console.log(projectArray[todoObj.value]['value']) // value of the clicked object (eg. 1)
-                //         console.log(todoObj.value) // value of the clicked object (eg. 1)
-
-                //         console.table(projectArray[todoObj.value]) // what i click on (object)
-                //         console.table(todoObj) // what i click on (object)
-                //         return true
-                //     }
-                // })
-                // arr = arr.filter(function(item) {
-                //     return item !== value
-                // })
                 
                 projectArray = projectArray.filter(function(todo) {
                     if (todo.value != todoObj.value) {
@@ -223,12 +202,50 @@ const addNewProject = (() => {
                 console.table(projectArray)
             })
 
-            //------------------------------------------------ DISPLAY TODO DETAILS
+            let editBtn = document.createElement('button')
+            editBtn.textContent = 'EDIT'
+            newToDo.append(editBtn)
+            editBtn.style.display = "none";
+            editBtn.setAttribute('value', `${num}`)
+
+            editBtn.addEventListener('click', () => {
+                let currentValue = todoObj.value
+            
+                console.log(editBtn.value)
+                
+                // console.log(currentValue)
+                console.log(`num at edit click= ${num}`)
+                num = currentValue
+                console.log(`num changed= ${num}`)
+                card.append(formPopUp)
+                // num = currentNum
+                
+                console.log(`num after form append= ${num}`)
+                // console.log(`currentNum after form append= ${currentNum}`)
+                // console.log(todoObj.value)
+                
+                projectArray = projectArray.filter(function(todo) {
+                    if (todo.value != todoObj.value) {
+                        // console.log(todo.value)
+                        return true
+                    }
+                })
+                let thisOne = projectArray.filter(function(todo) {
+                    if (todo.value == todoObj.value) {
+                        return true
+                    }
+                })
+                console.table(thisOne)
+                newToDo.remove()
+            })
+
+            //------------------------------------------------ DISPLAY/TOGGLE TODO DETAILS ON CLICK
             newToDo.addEventListener('click', () => {
                 NTDDesc.classList.toggle('displayBlock')
                 NTDDue.classList.toggle('displayBlock')
                 NTDPriority.classList.toggle('displayBlock')
                 delBtn.classList.toggle('displayBlock')
+                editBtn.classList.toggle('displayBlock')
             })
 
             //--------------------------------------------- ADD TODOS INTO ARRAY
@@ -239,10 +256,40 @@ const addNewProject = (() => {
                 priorityInput.value
             )
             todoObj.value = num
+            console.log(`num just before object is pushed into array = ${num}`)
             projectArray.push(todoObj)
+            let ordered = projectArray.sort((a, b) => a.value - b.value);
+            console.table(projectArray)
+
+            let indexOfThisToDoObject = projectArray.indexOf(todoObj, 0)
+            console.log(`index of this ${todoObj.value} num = ${indexOfThisToDoObject}`)
+
+            toDoSpace.insertBefore(newToDo, toDoSpace.children[indexOfThisToDoObject + 1])
+            // console.table(ordered);
+
+            
+            // function findHighestNum() { // as function
+            const findHighestNum = (() => { // as a module
+                const highestNum = projectArray
+                highestNum.sort(function(a, b){return a.value-b.value});
+                let lowest = highestNum[0]['value'];
+                let highest = highestNum[highestNum.length-1]['value'];
+                let stat = `highest = ${highest} || lowest = ${lowest}`
+                return {
+                    stat,
+                    lowest,
+                    highest,
+                }
+            })
+            console.log(findHighestNum().stat)
+            console.log(findHighestNum().highest)
+
+            num = findHighestNum().highest
+
             // console.log(projectArray[todoObj.value]['value'])
             console.table(projectArray)
             num++
+            console.log(`the next num value will be = ${num} -------->`)
         }
 
         formContainer.addEventListener('submit', onSubmit)
