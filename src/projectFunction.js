@@ -1,4 +1,4 @@
-import { add, remove } from 'lodash'
+import { add, isElement, remove } from 'lodash'
 import pageLoad from './pageLoad'
 // import createPopUpForm from './ToDoClass'
 
@@ -183,17 +183,9 @@ const addNewProject = (() => {
                 
                 projectArray = projectArray.filter(function(todo) {
                     if (todo.value != todoObj.value) {
-                        // console.table(todo) // loops over objects (index) that satisfy TRUE (!=) LOOPS OTHER
-                        // console.table(projectArray[todo.value]) // same as pure 'todo' LOOPS OTHER
 
                         console.log(todo.value) // loops over the objects' 'value' that satisfy TRUE (eg. 1) LOOPS OTHER
-                        // console.log(projectArray[todo.value]['value']) // same as pure 'todo.value' LOOPS OTHER
 
-                        // console.log(projectArray[todoObj.value]['value']) // value of the clicked object (eg. 1)
-                        // console.log(todoObj.value) // value of the clicked object (eg. 1) CLICKED ONLY
-
-                        // console.table(projectArray[todoObj.value]) // what i click on (object)
-                        // console.table(todoObj) // what i click on (object) CLICKED ONLY
                         return true
                     }
                 })
@@ -211,16 +203,16 @@ const addNewProject = (() => {
             editBtn.addEventListener('click', () => {
                 let currentValue = todoObj.value
             
-                console.log(editBtn.value)
+                // console.log(editBtn.value)
                 
                 // console.log(currentValue)
-                console.log(`num at edit click= ${num}`)
+                // console.log(`num at edit click= ${num}`)
                 num = currentValue
-                console.log(`num changed= ${num}`)
+                // console.log(`num changed= ${num}`)
                 card.append(formPopUp)
                 // num = currentNum
                 
-                console.log(`num after form append= ${num}`)
+                // console.log(`num after form append= ${num}`)
                 // console.log(`currentNum after form append= ${currentNum}`)
                 // console.log(todoObj.value)
                 
@@ -237,6 +229,7 @@ const addNewProject = (() => {
                 })
                 console.table(thisOne)
                 newToDo.remove()
+                newToDoButton.disabled = true
             })
 
             //------------------------------------------------ DISPLAY/TOGGLE TODO DETAILS ON CLICK
@@ -282,7 +275,7 @@ const addNewProject = (() => {
                 }
             })
             console.log(findHighestNum().stat)
-            console.log(findHighestNum().highest)
+            // console.log(findHighestNum().highest)
 
             num = findHighestNum().highest
 
@@ -302,8 +295,19 @@ const addNewProject = (() => {
 
         formHeading.addEventListener('click', () => {
             // formPopUp.style.display = "none"
-            formPopUp.remove()
-            newToDoButton.disabled = false
+            if (projectArray === '') {
+                // console.log('EMPTY ARRAY')
+                formPopUp.remove()
+                newToDoButton.disabled = false
+            } else if (toDoTitleInput.value != '' || toDoDescInput.value != '' || priorityInput.value != '') {
+                // console.log('NON-EMPTY INPUT')
+                submitButton.click()
+            } else {
+                // console.log('EMPTY INPUT')
+                // submitButton.click()
+                formPopUp.remove()
+                newToDoButton.disabled = false
+            }
             // formPopUp.classList.toggle('displayBlock')
         })
         
