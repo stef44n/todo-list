@@ -3,6 +3,21 @@
     padding: 0;
 }
 
+@font-face {
+    font-family: 'header-font';
+    src: url(./Archistico_Bold.ttf) /* format('ttf') */;
+}
+
+@font-face {
+    font-family: 'button-font';
+    src: url(./CandelaBook.otf) /* format('ttf') */;
+}
+
+@font-face {
+    font-family: 'page-font';
+    src: url(./ABeeZee-Regular.otf) /* format('ttf') */;
+}
+
 #mainContainer {
     height: 100vh;
     background-color: black;
@@ -13,7 +28,8 @@
 
 header {
     background-color: aqua;
-    font-size: 1.8rem;
+    font-family: 'header-font';
+    font-size: 4rem;
     font-weight: 600;
     padding: 20px;
 }
@@ -36,6 +52,7 @@ header {
 
 button {
     padding: 5px 10px;
+    font-family: 'button-font';
     /* border-radius: 10px; */
 }
 
@@ -54,6 +71,7 @@ footer {
     width: 100%;
     padding: 20px 0;
     text-align: center;
+    font-family: 'header-font';
 }
 
 .card {
@@ -79,6 +97,10 @@ input[type=text]:focus-visible {
     outline: none;
 }
 
+.card h1 {
+    font-family: 'page-font';
+}
+
 #addTitleButton,
 #changeTitleButton {
     background-color: rgba(211, 211, 211, 0.3);
@@ -90,9 +112,21 @@ input[type=text]:focus-visible {
     /* height: 70%; */
 }
 
+#formHeading {
+    font-family: 'page-font';
+}
+
+label,
+input[type='submit'],
+p,
+h4 {
+    font-family: 'page-font';
+}
+
 .ToDo {
     background-color: aqua;
     border: solid 1px gray;
+    padding: 5px 10px;
     /* height: 30px; */
 }
 
