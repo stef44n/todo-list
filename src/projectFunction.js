@@ -40,6 +40,24 @@ const addNewProject = (() => {
         card.prepend(newTitle)
         titleInput.remove()
         addTitleButton.remove()
+        addChangeTitleButton()
+    }
+
+    const changeTitleButton = document.createElement('button')
+    changeTitleButton.setAttribute('id', 'changeTitleButton')
+    changeTitleButton.textContent = 'change'
+    card.append(changeTitleButton)
+    changeTitleButton.style.display = "none";
+
+    changeTitleButton.addEventListener('click', () => {
+        card.prepend(titleInput)
+        card.querySelector('h1').remove()
+        card.insertBefore(addTitleButton, card.children[1])
+        changeTitleButton.style.display = "none"
+    })
+
+    function addChangeTitleButton() {
+        changeTitleButton.style.display = "block";
     }
 
     const toDoSpace = document.createElement('div')

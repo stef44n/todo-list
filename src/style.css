@@ -79,7 +79,8 @@ input[type=text]:focus-visible {
     outline: none;
 }
 
-#addTitleButton {
+#addTitleButton,
+#changeTitleButton {
     background-color: rgba(211, 211, 211, 0.3);
     border: none;
 }
