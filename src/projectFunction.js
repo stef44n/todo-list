@@ -2,8 +2,8 @@ import { add, isElement, remove } from 'lodash'
 import pageLoad from './pageLoad'
 // import createPopUpForm from './ToDoClass'
 
-const projectFactory = (title, deadline, description, priority) => {
-    return {title, deadline, description, priority}
+const projectFactory = (title, deadline, description, priority, checklist) => {
+    return {title, deadline, description, priority, checklist}
 }
 
 let index = 0
@@ -134,6 +134,16 @@ const addNewProject = (() => {
         priorityInput.append(priOpt4)
 
         formContainer.append(priorityInput)
+
+        const checklistLabel = document.createElement('label')
+        checklistLabel.setAttribute('for', 'checklist')
+        checklistLabel.innerText = 'Checklist'
+        formContainer.append(checklistLabel)
+
+        const checklistInput = document.createElement('input')
+        checklistInput.setAttribute('type', 'checkbox')
+        checklistInput.setAttribute('name', 'checklist')
+        formContainer.append(checklistInput)
     
         const submitButton = document.createElement('input')
         submitButton.setAttribute('type', 'submit')
@@ -172,6 +182,17 @@ const addNewProject = (() => {
             newToDo.append(NTDPriority)
             NTDPriority.style.display = "none";
 
+            let NTDChecklist = document.createElement('input')
+            NTDChecklist.setAttribute('type', 'checkbox')
+            let checkBOX = false
+            if (checklistInput.checked == true) {
+                NTDChecklist.checked = true
+                checkBOX = true
+            }
+            NTDChecklist.disabled = true
+            newToDo.append(NTDChecklist)
+            NTDChecklist.style.display = "none";
+
             let delBtn = document.createElement('button')
             delBtn.textContent = 'DEL'
             newToDo.append(delBtn)
@@ -183,9 +204,7 @@ const addNewProject = (() => {
                 
                 projectArray = projectArray.filter(function(todo) {
                     if (todo.value != todoObj.value) {
-
                         console.log(todo.value) // loops over the objects' 'value' that satisfy TRUE (eg. 1) LOOPS OTHER
-
                         return true
                     }
                 })
@@ -237,6 +256,7 @@ const addNewProject = (() => {
                 NTDDesc.classList.toggle('displayBlock')
                 NTDDue.classList.toggle('displayBlock')
                 NTDPriority.classList.toggle('displayBlock')
+                NTDChecklist.classList.toggle('displayBlock')
                 delBtn.classList.toggle('displayBlock')
                 editBtn.classList.toggle('displayBlock')
             })
@@ -246,7 +266,8 @@ const addNewProject = (() => {
                 toDoTitleInput.value,
                 deadlineInput.value,
                 toDoDescInput.value,
-                priorityInput.value
+                priorityInput.value,
+                checkBOX
             )
             todoObj.value = num
             console.log(`num just before object is pushed into array = ${num}`)
@@ -259,7 +280,6 @@ const addNewProject = (() => {
 
             toDoSpace.insertBefore(newToDo, toDoSpace.children[indexOfThisToDoObject + 1])
             // console.table(ordered);
-
             
             // function findHighestNum() { // as function
             const findHighestNum = (() => { // as a module
@@ -285,8 +305,7 @@ const addNewProject = (() => {
             console.log(`the next num value will be = ${num} -------->`)
         }
 
-        formContainer.addEventListener('submit', onSubmit)
-    
+        formContainer.addEventListener('submit', onSubmit)    
     
         //--------------------------------------------------------------
         formPopUp.style.display = "block";
@@ -310,17 +329,8 @@ const addNewProject = (() => {
             }
             // formPopUp.classList.toggle('displayBlock')
         })
-        
-        // addToDoContent = document.createElement('button')
-        // newToDo.setAttribute('id', 'addToDoContentButton')
-        // addToDoContent.textContent = '+'
-        // newToDo.append(addToDoContent)
 
     })
-    
-    // addToDoContent.addEventListener('click', () => {
-    //     createPopUpForm()
-    // })
 
     const deleteProjectButton = document.createElement('button')
     deleteProjectButton.textContent = 'delete project'
@@ -359,7 +369,6 @@ const addNewProject = (() => {
             deleteProjectButton.disabled = false
         })
     }
-
 
     return {
         card,
