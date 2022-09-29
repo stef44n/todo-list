@@ -3,6 +3,12 @@
     padding: 0;
 }
 
+:root {
+    --header: hotpink;
+    --body: purple;
+    --footer: #000046;
+}
+
 @font-face {
     font-family: 'header-font';
     src: url(./Archistico_Bold.ttf) /* format('ttf') */;
@@ -27,11 +33,13 @@
 }
 
 header {
-    background-color: aqua;
+    background-color: var(--header);
+    background-image: linear-gradient(180deg, pink,var(--header));
     font-family: 'header-font';
     font-size: 4rem;
     font-weight: 600;
     padding: 20px;
+    padding-left: 40px;
 }
 
 #mainContent {
@@ -44,6 +52,7 @@ header {
     width: 200px;
     /* height: 100%; */
     background-color: lightpink;
+    background-image: linear-gradient(180deg, var(--header), #620062, var(--footer));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,21 +62,30 @@ header {
 button {
     padding: 5px 10px;
     font-family: 'button-font';
-    /* border-radius: 10px; */
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+}
+
+button:not(.deleteProjectButton) {
+    padding: 5px 20px;
 }
 
 #content {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-template-rows: min-content;
     grid-auto-rows: min-content;
     flex-grow: 1;
-    background-image: linear-gradient(180deg, lightyellow, lightgrey);
+    background-image: linear-gradient(180deg, var(--header), var(--body), var(--footer));
+    gap: 20px;
+    padding: 20px;
 }
 
 footer {
     display: inline-block;
-    background-color: yellow;
+    background-color: var(--footer);
+    color: white;
     width: 100%;
     padding: 20px 0;
     text-align: center;
@@ -77,12 +95,23 @@ footer {
 .card {
     background-color: white;
     /* border: 1px solid red; */
-    border-radius: 5px;
+    border-radius: 10px;
     /* height: 80px; */
-    margin: 20px;
+    /* margin: 20px; */
     padding: 20px;
     padding-bottom: 50px;
     position: relative;
+}
+
+#titleBox {
+    /* border: black solid 1px; */
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#titleBox input[type=text] {
+    min-height: 36px;
 }
 
 input[type=text] {
@@ -91,6 +120,7 @@ input[type=text] {
     border-bottom: solid 1px black;
     width: 60%;
     margin-right: 10px;
+    font-size: 16px;
 }
 
 input[type=text]:focus-visible {
@@ -99,21 +129,38 @@ input[type=text]:focus-visible {
 
 .card h1 {
     font-family: 'page-font';
+    color: var(--footer);
+    --body: rgba(128, 0, 128, 0.3);
+    text-shadow: 3px -4px 4px var(--body);
 }
 
 #addTitleButton,
 #changeTitleButton {
     background-color: rgba(211, 211, 211, 0.3);
     border: none;
+    align-self: flex-end;
 }
 
 .toDoSpace {
-    border: solid 1px lightgray;
+    /* border: solid 1px lightgray; */
     /* height: 70%; */
+    background-color: white;
+    display: grid;
+    gap: 3px;
+}
+
+.newToDoButton {
+    justify-self: center;
+    --body: rgba(128, 0, 128, 0.3);
+    background-color: var(--body);
 }
 
 #formHeading {
     font-family: 'page-font';
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgba(255, 182, 193, 0.4);
+    padding: 5px 0;
 }
 
 label,
@@ -124,16 +171,77 @@ h4 {
 }
 
 .ToDo {
-    background-color: aqua;
-    border: solid 1px gray;
-    padding: 5px 10px;
+    /* background-color: aqua; */
+    background-image: linear-gradient(120deg, pink,var(--header));
+    /* border: solid 1px gray; */
+    border-radius: 5px;
+    padding: 5px 15px;
     /* height: 30px; */
+    position: relative;
+}
+
+.ToDo input[type=checkbox] {
+    border: solid black 3px;
+    position: absolute;
+    right: 15px;
+    /* top: 19px; */
+    height: 19px;
+    width: 19px;
+}
+
+.ToDo p:nth-of-type(1) {
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+    .ToDo p:nth-of-type(2) {
+    font-style: italic;
+    margin: 5px 0;
+}
+
+.ToDo p:nth-of-type(4n) {
+    font-weight: bold;
+    text-align: center;
+    font-size: larger;
+}
+
+#toDoButtonsContainer {
+    /* border: black solid 1px; */
+    display: flex;
+    justify-content: end;
+    flex-direction: row-reverse;
+    gap: 2px;
+    margin-top: 5px;
+}
+
+#toDoButtonsContainer button,
+#delValidation button {
+    font-family: 'page-font';
+    font-size: 16px;
+    padding: 5px 20px;
+}
+
+#toDoButtonsContainer button {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 3px 20px;
+}
+
+#editBtn {
+    --body: rgba(128, 0, 128, 0.3);
+    background-color: var(--body);
+}
+
+#delBtn {
+    background-color: rgba(255, 0, 0, 0.4);
 }
 
 .deleteProjectButton {
     position: absolute;
     bottom: 10px;
     right: 20px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.4);
 }
 
 .form-popup {
@@ -141,15 +249,18 @@ h4 {
     position: relative;
     bottom: 0;
     /* right: 15px; */
-    border: 3px solid #f1f1f1;
+    /* border: 3px solid #f1f1f1; */
+    border: 3px solid var(--body);
     z-index: 9;
+    margin-top: 10px;
+    border-radius: 10px;
 }
 
 .form-container {
     display: grid;
     grid-template-columns: repeat(2, auto);
     gap: 10px;
-    padding: 5px;
+    padding: 15px;
 }
 
 #formHeading, input[type=submit] {
@@ -165,14 +276,39 @@ form > input[type=text] {
     display: block !important;
 }
 
+.displayFlex {
+    display: flex !important;
+}
+
 #delValidation {
     /* display: none; */
     position: absolute;
     width: max-content;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-image: linear-gradient(120deg, var(--body),var(--footer));
     bottom: 10px;
     right: 20px;
-    border: 5px solid red;
+    border: 10px outset rgb(211, 0, 0);
     z-index: 10;
-    padding: 10px;
+    padding: 10px 20px;
+}
+
+#delValidation h4 {
+    font-size: 28px;
+}
+
+#delValButtons {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+#delValButtons button:nth-of-type(1) {
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+button:hover {
+    /* opacity: 0.8; */
+    filter: brightness(75%);
 }

@@ -13,16 +13,20 @@ const addNewProject = (() => {
     card.setAttribute('class', 'card')
     pageLoad.content.append(card)
 
+    const titleBox = document.createElement('div')
+    titleBox.setAttribute('id', 'titleBox')
+    card.append(titleBox)
+
     const titleInput = document.createElement('input')
     titleInput.setAttribute('type', 'text')
     titleInput.setAttribute('placeholder', 'set project title')
-    card.append(titleInput)
+    titleBox.append(titleInput)
     titleInput.focus()
 
     const addTitleButton = document.createElement('button')
     addTitleButton.setAttribute('id', 'addTitleButton')
-    addTitleButton.textContent = 'enter'
-    card.append(addTitleButton)
+    addTitleButton.innerHTML = '&#8629;'
+    titleBox.append(addTitleButton)
 
     addTitleButton.addEventListener('click', () => {
         addTitle()
@@ -37,7 +41,7 @@ const addNewProject = (() => {
     function addTitle() {
         let newTitle = document.createElement('h1')
         newTitle.innerText = titleInput.value
-        card.prepend(newTitle)
+        titleBox.prepend(newTitle)
         titleInput.remove()
         addTitleButton.remove()
         addChangeTitleButton()
@@ -45,15 +49,16 @@ const addNewProject = (() => {
 
     const changeTitleButton = document.createElement('button')
     changeTitleButton.setAttribute('id', 'changeTitleButton')
-    changeTitleButton.textContent = 'change'
-    card.append(changeTitleButton)
+    changeTitleButton.textContent = 'edit title'
+    titleBox.append(changeTitleButton)
     changeTitleButton.style.display = "none";
 
     changeTitleButton.addEventListener('click', () => {
-        card.prepend(titleInput)
-        card.querySelector('h1').remove()
-        card.insertBefore(addTitleButton, card.children[1])
+        titleBox.prepend(titleInput)
+        titleBox.querySelector('h1').remove()
+        titleBox.insertBefore(addTitleButton, titleBox.children[1])
         changeTitleButton.style.display = "none"
+        titleInput.focus()
     })
 
     function addChangeTitleButton() {
@@ -65,7 +70,8 @@ const addNewProject = (() => {
     card.append(toDoSpace)
 
     const newToDoButton = document.createElement('button')
-    newToDoButton.textContent = 'add new ToDo'
+    newToDoButton.textContent = 'new item +'
+    newToDoButton.setAttribute('class', 'newToDoButton')
     toDoSpace.append(newToDoButton)
 
     // let newToDo = ''
@@ -207,15 +213,22 @@ const addNewProject = (() => {
                 NTDChecklist.checked = true
                 checkBOX = true
             }
-            NTDChecklist.disabled = true
-            newToDo.append(NTDChecklist)
-            NTDChecklist.style.display = "none";
+            // NTDChecklist.disabled = true
+            NTDChecklist.style.pointerEvents = 'none'
+            newToDo.prepend(NTDChecklist)
+            // NTDChecklist.style.display = "none";
+
+            let toDoButtonsContainer = document.createElement('div')
+            toDoButtonsContainer.setAttribute('id', 'toDoButtonsContainer')
+            newToDo.append(toDoButtonsContainer)
+            toDoButtonsContainer.style.display = "none";
 
             let delBtn = document.createElement('button')
-            delBtn.textContent = 'DEL'
-            newToDo.append(delBtn)
+            delBtn.textContent = 'DELETE'
+            toDoButtonsContainer.append(delBtn)
             delBtn.style.display = "none";
             delBtn.setAttribute('value', `${num}`)
+            delBtn.setAttribute('id', `delBtn`)
 
             delBtn.addEventListener('click', () => {
                 newToDo.remove()
@@ -233,9 +246,10 @@ const addNewProject = (() => {
 
             let editBtn = document.createElement('button')
             editBtn.textContent = 'EDIT'
-            newToDo.append(editBtn)
+            toDoButtonsContainer.append(editBtn)
             editBtn.style.display = "none";
             editBtn.setAttribute('value', `${num}`)
+            editBtn.setAttribute('id', `editBtn`)
 
             editBtn.addEventListener('click', () => {
                 let currentValue = todoObj.value
@@ -247,6 +261,7 @@ const addNewProject = (() => {
                 num = currentValue
                 // console.log(`num changed= ${num}`)
                 card.append(formPopUp)
+                toDoTitleInput.focus()
                 // num = currentNum
                 
                 // console.log(`num after form append= ${num}`)
@@ -274,7 +289,8 @@ const addNewProject = (() => {
                 NTDDesc.classList.toggle('displayBlock')
                 NTDDue.classList.toggle('displayBlock')
                 NTDPriority.classList.toggle('displayBlock')
-                NTDChecklist.classList.toggle('displayBlock')
+                // NTDChecklist.classList.toggle('displayBlock')
+                toDoButtonsContainer.classList.toggle('displayFlex')
                 delBtn.classList.toggle('displayBlock')
                 editBtn.classList.toggle('displayBlock')
             })
@@ -351,7 +367,7 @@ const addNewProject = (() => {
     })
 
     const deleteProjectButton = document.createElement('button')
-    deleteProjectButton.textContent = 'delete project'
+    deleteProjectButton.innerHTML = '&#10060;'
     deleteProjectButton.setAttribute('class', 'deleteProjectButton')
     card.append(deleteProjectButton)
 
@@ -369,18 +385,22 @@ const addNewProject = (() => {
         const delQuestion = document.createElement('h4')
         delQuestion.textContent = 'DELETE PROJECT?'
         delValidation.append(delQuestion)
+
+        const delValButtons = document.createElement('div')
+        delValButtons.setAttribute('id', 'delValButtons')
+        delValidation.append(delValButtons)
     
         const delYes = document.createElement('button')
-        delYes.textContent = 'Yes'
-        delValidation.append(delYes)
+        delYes.textContent = 'DELETE'
+        delValButtons.append(delYes)
 
         delYes.addEventListener('click', () => {
             card.remove()
         })
     
         const delNo = document.createElement('button')
-        delNo.textContent = 'No'
-        delValidation.append(delNo)
+        delNo.textContent = 'KEEP'
+        delValButtons.append(delNo)
         
         delNo.addEventListener('click', () => {
             delValidation.remove()
