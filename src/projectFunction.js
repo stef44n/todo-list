@@ -28,24 +28,26 @@ const addNewProject = (() => {
     addTitleButton.innerHTML = '&#8629;'
     titleBox.append(addTitleButton)
 
-    addTitleButton.addEventListener('click', () => {
+    const addTitleButtonFunction = (() => {
         addTitle()
     })
+    addTitleButton.addEventListener('click', addTitleButtonFunction)
 
-    titleInput.addEventListener("keypress", function(event) {
+    const titleInputFunction = ((event) => {
         if (event.key === 'Enter') {
             addTitle()
         }
     })
+    titleInput.addEventListener("keypress", titleInputFunction)
     
-    function addTitle() {
+    const addTitle = (() => {
         let newTitle = document.createElement('h1')
         newTitle.innerText = titleInput.value
         titleBox.prepend(newTitle)
         titleInput.remove()
         addTitleButton.remove()
         addChangeTitleButton()
-    }
+    })
 
     const changeTitleButton = document.createElement('button')
     changeTitleButton.setAttribute('id', 'changeTitleButton')
@@ -53,17 +55,18 @@ const addNewProject = (() => {
     titleBox.append(changeTitleButton)
     changeTitleButton.style.display = "none";
 
-    changeTitleButton.addEventListener('click', () => {
+    const changeTitleButtonFunction = (() => {
         titleBox.prepend(titleInput)
         titleBox.querySelector('h1').remove()
         titleBox.insertBefore(addTitleButton, titleBox.children[1])
         changeTitleButton.style.display = "none"
         titleInput.focus()
     })
+    changeTitleButton.addEventListener('click', changeTitleButtonFunction)
 
-    function addChangeTitleButton() {
+    const addChangeTitleButton = (() => {
         changeTitleButton.style.display = "block";
-    }
+    })
 
     const toDoSpace = document.createElement('div')
     toDoSpace.setAttribute('class', 'toDoSpace')
@@ -81,7 +84,7 @@ const addNewProject = (() => {
 
     index++
     let thisIndex = index
-    newToDoButton.addEventListener('click', () => {
+    const newToDoButtonFunction = (() => {
         // ------------------------------------------------------ POPUP FORM
     
         const formPopUp = document.createElement('div')
@@ -176,7 +179,7 @@ const addNewProject = (() => {
 
         //----------------------------------------------- SUBMIT FORM
 
-        function onSubmit(el) {
+        const onSubmit = ((el) => {
             el.preventDefault()
             // console.log('clicked submit')
             formPopUp.remove()
@@ -230,7 +233,7 @@ const addNewProject = (() => {
             delBtn.setAttribute('value', `${num}`)
             delBtn.setAttribute('id', `delBtn`)
 
-            delBtn.addEventListener('click', () => {
+            const delBtnFunction = (() => {
                 newToDo.remove()
                 
                 projectArray = projectArray.filter(function(todo) {
@@ -243,6 +246,7 @@ const addNewProject = (() => {
                 // console.log(thisOne)
                 console.table(projectArray)
             })
+            delBtn.addEventListener('click', delBtnFunction)
 
             let editBtn = document.createElement('button')
             editBtn.textContent = 'EDIT'
@@ -251,22 +255,13 @@ const addNewProject = (() => {
             editBtn.setAttribute('value', `${num}`)
             editBtn.setAttribute('id', `editBtn`)
 
-            editBtn.addEventListener('click', () => {
+            const editBtnFunction = (() => {
                 let currentValue = todoObj.value
             
-                // console.log(editBtn.value)
-                
-                // console.log(currentValue)
-                // console.log(`num at edit click= ${num}`)
                 num = currentValue
                 // console.log(`num changed= ${num}`)
                 card.append(formPopUp)
                 toDoTitleInput.focus()
-                // num = currentNum
-                
-                // console.log(`num after form append= ${num}`)
-                // console.log(`currentNum after form append= ${currentNum}`)
-                // console.log(todoObj.value)
                 
                 projectArray = projectArray.filter(function(todo) {
                     if (todo.value != todoObj.value) {
@@ -283,9 +278,10 @@ const addNewProject = (() => {
                 newToDo.remove()
                 newToDoButton.disabled = true
             })
+            editBtn.addEventListener('click', editBtnFunction)
 
             //------------------------------------------------ DISPLAY/TOGGLE TODO DETAILS ON CLICK
-            newToDo.addEventListener('click', () => {
+            const newToDoFunction = (() => {
                 NTDDesc.classList.toggle('displayBlock')
                 NTDDue.classList.toggle('displayBlock')
                 NTDPriority.classList.toggle('displayBlock')
@@ -294,6 +290,7 @@ const addNewProject = (() => {
                 delBtn.classList.toggle('displayBlock')
                 editBtn.classList.toggle('displayBlock')
             })
+            newToDo.addEventListener('click', newToDoFunction)
 
             //--------------------------------------------- ADD TODOS INTO ARRAY
             const todoObj = projectFactory(
@@ -336,8 +333,8 @@ const addNewProject = (() => {
             // console.log(projectArray[todoObj.value]['value'])
             console.table(projectArray)
             num++
-            console.log(`the next num value will be = ${num} -------->`)
-        }
+            console.log(`the next num value will be = ${num} --------> V2.0`)
+        })
 
         formContainer.addEventListener('submit', onSubmit)    
     
@@ -346,7 +343,7 @@ const addNewProject = (() => {
         newToDoButton.setAttribute('disabled', '')
         toDoTitleInput.focus()
 
-        formHeading.addEventListener('click', () => {
+        const formHeadingFunction = (() => {
             // formPopUp.style.display = "none"
             if (projectArray === '') {
                 // console.log('EMPTY ARRAY')
@@ -363,21 +360,24 @@ const addNewProject = (() => {
             }
             // formPopUp.classList.toggle('displayBlock')
         })
+        formHeading.addEventListener('click', formHeadingFunction)
 
     })
+    newToDoButton.addEventListener('click', newToDoButtonFunction)
 
     const deleteProjectButton = document.createElement('button')
     deleteProjectButton.innerHTML = '&#10060;'
     deleteProjectButton.setAttribute('class', 'deleteProjectButton')
     card.append(deleteProjectButton)
 
-    deleteProjectButton.addEventListener('click', () => {
+    const deleteProjectButtonFunction = (() => {
         deleteProjectButton.setAttribute('disabled', '')
         deleteProjectValidation()
         // card.remove()
     })
+    deleteProjectButton.addEventListener('click', deleteProjectButtonFunction)
 
-    function deleteProjectValidation() {
+    const deleteProjectValidation = (() => {
         const delValidation = document.createElement('div')
         delValidation.setAttribute('id', 'delValidation')
         card.append(delValidation)
@@ -406,7 +406,7 @@ const addNewProject = (() => {
             delValidation.remove()
             deleteProjectButton.disabled = false
         })
-    }
+    })
 
     return {
         card,
@@ -416,12 +416,12 @@ const addNewProject = (() => {
 });
 
 //-------------------------------------------------------- ADD NEW PROJECT
-function addNewProjectCard() {
+const addNewProjectCard = (() => {
     const button = document.getElementById('newProject')
     button.addEventListener('click', () => {
         addNewProject()
     })
-}
+})
 
 export default addNewProject;
 export {addNewProjectCard};
